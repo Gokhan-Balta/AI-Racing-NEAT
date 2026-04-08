@@ -1,0 +1,20 @@
+# Sanal ortam 
+venv/
+
+# Python derleme dosyaları
+__pycache__/
+*.pyc
+*.pyo
+
+# NEAT checkpoint dosyaları — çok yer kaplar
+checkpoint-*
+
+# Eğitilmiş model
+best_model.pkl
+
+# VS Code ayarları
+.vscode/
+
+# Windows sistem dosyası
+Thumbs.db
+desktop.ini
