@@ -12,11 +12,6 @@ class Car:
     """
 
     def __init__(self, x, y):
-        """
-        __init__ her araba oluşturulduğunda otomatik çalışır.
-        x, y → arabanın başlangıç koordinatları
-        """
-
         # Konum
         self.x = x
         self.y = y
@@ -25,7 +20,6 @@ class Car:
         self.lap_done = False
         self.started = False
         
-
         # Açı (derece cinsinden)
         # 0 = sağa bakıyor, 90 = yukarı, 180 = sola, 270 = aşağı
         self.angle = 0
@@ -34,35 +28,30 @@ class Car:
         self.speed = 3
 
         # Araba hayatta mı?
-        # Duvara çarpınca False yapacağız
         self.alive = True
 
-        # Araba kaç piksel ilerledi (fitness skoru için)
-        # NEAT hangi arabanın daha iyi olduğuna buna bakarak karar verir
+        # Araba kaç piksel ilerledi- fitness skoru için
         self.distance = 0
 
-        # Sensörler — 5 adet ışın fırlatacağız
+        # Sensörler — 5 adet ışın fırlatır
         # Her biri bir yönde duvara olan mesafeyi ölçer
-        # Şu an boş liste, update() içinde dolduracağız
         self.sensors = []
 
     def update(self, track_mask):
+        
         """
-        Her frame'de çağrılır.
         Arabayı hareket ettirir, sensörleri günceller,
         çarpışma kontrolü yapar.
         """
 
         if not self.alive:
-            return  # Ölmüşse hiçbir şey yapma
+            return  
 
         # --- HAREKET ---
-        # Trigonometri: açıya göre x ve y değişimini hesapla
-        # math.cos ve math.sin radyan ister, biz derece kullanıyoruz
-        # Bu yüzden math.radians() ile çeviriyoruz
+        # Bu yüzden math.radians() radyan çevrilir.
         self.x += math.cos(math.radians(self.angle)) * self.speed
         self.y -= math.sin(math.radians(self.angle)) * self.speed
-        # Not: y eksenini tersine alıyoruz çünkü pygame'de
+        # Not: y eksenini tersine alınır çünkü pygame'de
         # y aşağı gidince artar (matematik koordinatının tersi)
 
         self.distance += self.speed
@@ -79,14 +68,14 @@ class Car:
 
         # Track mask'a sor: bu nokta yolda mı?
         if track_mask.get_at((cx, cy)) == 0:
-            self.alive = False  # Duvara çarptı
+            self.alive = False  
             return
 
         # --- SENSÖRLER ---
         self.sensors = []
 
         # 5 farklı açıda ışın fırlatıyoruz
-        # -90 ile +90 derece arası (arabanın önündeki yarım daire)
+        # -90 ile +90 derece arası 
         sensor_angles = [-90, -45, 0, 45, 90]
 
         for sensor_angle in sensor_angles:
