@@ -20,37 +20,25 @@ BLACK = (0, 0, 0)
 # Kaçıncı nesildeyiz? Ekranda göstereceğiz
 generation = 0
 
-# Başlangıç noktası trac için
-#START_X = 400
-#START_Y = 515
-
-# Başlangıç noktası track_1 için
-#START_X = 400
-#START_Y = 455
-
-# track_2 için başlangıç noktası
-#START_X = 400
-#START_Y = 433
-
 # Hangi yolu kullanıyoruz
 folder = "tracks"
 track_name = "track_1"
+
 # Dosya yolları
 image_path = os.path.join(folder, f"{track_name}.png")
 json_path = os.path.join(folder, f"{track_name}.json")
-
 
 
 def eval_genomes(genomes, config):
     """
     NEAT'in her nesilde çağırdığı ana fonksiyon.
 
-    'genomes' → o nesildeki tüm arabalar (genome = bir arabanın beyni)
+    'genomes' → o nesildeki tüm arabalar (arabanın beyni)
     'config'  → config.txt'den okunan ayarlar
 
     NEAT bu fonksiyona bakarak şunu anlar:
     "Her genomun fitness skoru ne? Kim daha iyi?"
-    Bizim görevimiz: her arabayı piste sal, ne kadar
+    Görev: her arabayı piste sal, ne kadar
     ilerlediğini ölç, genome.fitness'a yaz.
     """
 
@@ -58,9 +46,7 @@ def eval_genomes(genomes, config):
     generation += 1
 
     # --- PYGAME BAŞLAT ---
-    # Her nesilde pygame'i sıfırdan başlatmıyoruz,
-    # main bloğunda bir kez başlatıyoruz.
-    # Ama ekranı ve pisti burada yeniden kullanıyoruz.
+    # Her nesilde pygame'i sıfırdan başlatılmaz,
     screen = pygame.display.get_surface()
     clock  = pygame.time.Clock()
 
@@ -123,14 +109,14 @@ def eval_genomes(genomes, config):
                 pygame.quit()
                 sys.exit()
 
-        # --- HER ARABAY GÜNCELLE ---
+        # --- HER ARABAYI GÜNCELLE ---
         # Kaç araba hâlâ hayatta?
         alive_count = 0
 
         for i, car in enumerate(cars):
 
             if not car.alive:
-                continue  # ölmüşse atla
+                continue  
 
             alive_count += 1
 
@@ -150,8 +136,6 @@ def eval_genomes(genomes, config):
             output = nets[i].activate(inputs)
 
             # En yüksek çıktıyı seç → o yöne dön
-            # Örnek: output = [0.2, 0.8, -0.3]
-            # argmax → index 1 (düz git)
             decision = output.index(max(output))
 
             if decision == 0:
@@ -161,9 +145,8 @@ def eval_genomes(genomes, config):
             # decision == 1 → düz git (açı değişmez)
 
             # --- FITNESS SKORU GÜNCELLE ---
-            # Ne kadar ilerledi? distance değerini fitness'a ekle
-            # Bu çok önemli bir tasarım kararı:
-            # "Daha uzağa giden araba daha iyi" diyoruz
+            # Distance değerini fitness'a ekle
+            # "Daha uzağa giden araba daha iyi"
             genomes[i][1].fitness += car.distance * 0.01
 
             # --- TUR TAMAMLAMA ---
@@ -174,7 +157,7 @@ def eval_genomes(genomes, config):
             if dist_to_start > 80:
                 car.started = True
 
-            # Uzaklaştıktan sonra geri dönerse tur tamamdır
+            # Uzaklaştıktan sonra geri dönerse tur tamamlanır
             if car.started and dist_to_start < 40:
                 car.lap_done = True
                 car.alive = False
@@ -189,11 +172,7 @@ def eval_genomes(genomes, config):
         # --- EKRANA ÇİZ ---
         screen.blit(track, (0, 0))
 
-        # Başlangıç çizgisi trac için
-        #pygame.draw.rect(screen, RED, (390, 445, 20, 96))
-        # Başlangıç çizgisi track_1 için
-        #pygame.draw.rect(screen, RED, (388, 450, 24, 59))
-        #Test
+        # Başlangıç çizgisi
         pygame.draw.line(screen, RED,
             tuple(track_data["point_top"]),
             tuple(track_data["point_bottom"]),
@@ -234,8 +213,7 @@ def run():
     """
 
     # Config dosyasının tam yolu
-    # os.path.dirname(__file__) → bu dosyanın bulunduğu klasör
-    # Böylece farklı bilgisayarlarda da çalışır
+    # os.path.dirname(__file__) 
     config_path = os.path.join(
         os.path.dirname(__file__), "config.txt"
     )
@@ -262,7 +240,6 @@ def run():
 
     # Her 10 nesilde bir checkpoint kaydet
     # "checkpoint-" ile başlayan dosyalar oluşturur
-    # Kaldığın yerden devam etmek istersen:
     # population = neat.Checkpointer.restore_checkpoint("checkpoint-49")
     population.add_reporter(
         neat.Checkpointer(10, filename_prefix="checkpoint-")

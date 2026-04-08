@@ -166,6 +166,6 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print("Kullanim: python track_manager.py <pist_adi>")
-        print("Ornek   : python track_manager.py oval")
+        print("Ornek   : python track_manager.py track_1")
     else:
         setup_new_track(sys.argv[1])
