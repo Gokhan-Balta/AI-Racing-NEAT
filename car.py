@@ -88,17 +88,18 @@ class Car:
         
         relative_angle: arabanın yönüne göre kaç derece sapma
         
-        Nasıl çalışır?
-        Arabanın bulunduğu noktadan dışarı doğru adım adım ilerleriz.
-        Her adımda "bu nokta hâlâ yolda mı?" diye sorarız.
-        Siyah piksele çarptığımızda durur, kaç adım attığımızı döndürürüz.
+        Nasıl çalışır:
+        Arabanın bulunduğu noktadan dışarı doğru adım adım ilerlenir.
+        Her adımda "bu nokta hâlâ yolda mı?" diye sorulur.
+        Siyah piksele çarptığında durur, kaç adım attığı döndürülür.
         """
 
         # Işının gerçek açısı = arabanın açısı + sensörün sapması
         angle = math.radians(self.angle + relative_angle)
 
         # Adım adım ilerle
-        for distance in range(1, 200):  # en fazla 200 piksel bak
+        # en fazla 200 piksel bak
+        for distance in range(1, 200):  
             # Bu adımdaki koordinat
             rx = int(self.x + math.cos(angle) * distance)
             ry = int(self.y - math.sin(angle) * distance)
@@ -109,7 +110,7 @@ class Car:
 
             # Duvara çarptı mı?
             if track_mask.get_at((rx, ry)) == 0:
-                return distance  # Mesafeyi döndür
+                return distance  
 
         return 200  # 200 piksel içinde duvar bulunamadı
 
@@ -121,7 +122,7 @@ class Car:
         if not self.alive:
             return
 
-        # Arabayı küçük bir daire olarak çiz
+        # Arabayı küçük bir daire olarak çizdirir.
         pygame.draw.circle(screen, RED, (int(self.x), int(self.y)), 8)
 
         # Sensör ışınlarını çiz (sarı çizgiler)
@@ -144,9 +145,8 @@ class Car:
         NEAT algoritmasına verilecek input değerleri.
         5 sensör mesafesini 0-1 arasına normalize eder.
         
-        Neden normalize?
         Neural network'ler küçük sayılarla daha iyi çalışır.
-        150 piksel demek yerine 0.75 deriz (150/200 = 0.75)
+        150 piksel demek yerine 0.75 denir. (150/200 = 0.75)
         """
         if not self.sensors:
             return [0, 0, 0, 0, 0]
