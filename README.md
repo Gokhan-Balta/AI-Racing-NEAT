@@ -26,15 +26,26 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Pist Ekleme ve Başlangıç Noktalarının Belirleme. 
+
+Pist yöneticisi ile yeni pistler ve noktalar kolaylıkla belirlenebilir. Burada başlangıç noktası ve yarış yönü gibi noktalar kaydedilir. Bu noktalar pist adı ile model dosyasında kullanılabilir. Bu sayede kolaylıkla pistler arasında geçiş yapılabilir ya da yeni başlangıç noktları belirlenebilir. 
+
+```bash
+python track_manager.py track_1
+```
+
+<img width="550" height="500" alt="image" src="https://github.com/user-attachments/assets/cf820d43-df91-4006-bf5b-74d366973112" />
+
+
 ## Çalıştırma
 
 ```bash
 # Eğitimi başlat
 python neat_runner.py
-
-# Yeni pist ekle
-python track_manager.py pist_adi
 ```
+
+<img width="550" height="500" alt="image" src="https://github.com/user-attachments/assets/0ceb11a2-59be-498f-8e4c-a312986807d6" />
+
 
 ## Proje yapısı
 
