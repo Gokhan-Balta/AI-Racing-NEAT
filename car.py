@@ -9,13 +9,6 @@ YELLOW = (255, 255, 0)
 class Car:
     """
     Bir arabayı temsil eden sınıf.
-    
-    Sınıf (class) nedir?
-    Gerçek hayatta bir araba düşün — her arabanın
-    konumu, hızı, yönü vardır. Bunlar o arabaya ait özellikler.
-    Class, bu özellikleri ve davranışları bir arada tutan şablondur.
-    50 araba oluşturduğumuzda, her biri bu şablondan kopyalanır
-    ama kendi konumu ve hızı olur.
     """
 
     def __init__(self, x, y):
