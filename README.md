@@ -20,7 +20,7 @@ Nesiller ilerledikçe arabalar pisti tamamlamayı öğrenir.
 
 ```bash
 git clone https://github.com/kullanici_adi/AI-Racing-NEAT.git
-cd racing-ai
+cd AI-Racing-NEAT
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
